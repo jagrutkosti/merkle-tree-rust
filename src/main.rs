@@ -12,7 +12,7 @@ fn main() {
 }
 
 /**
- * The customizable method which can be used to generate the merkle tree
+ * Customizable method as required by merkle_tree mod
  */
 fn custom_hash_algo(content: &[u8]) -> Vec<u8> {
     let mut hash_fn = Sha256::new();
