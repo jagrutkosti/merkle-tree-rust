@@ -5,7 +5,7 @@ use merkle_tree::construct_merkle_tree;
 use sha2::{Digest, Sha256};
 
 fn main() {
-    let leaves = ["to", "be", "or", "not", "to", "be", "is", "question"];
+    let leaves = ["to", "be", "or", "not", "to", "be", "is", "the", "question"];
 
     let merkle_tree = construct_merkle_tree(&leaves, custom_hash_algo);
     println!("Sha256 hash is: {:?}", hex::encode(merkle_tree.root));

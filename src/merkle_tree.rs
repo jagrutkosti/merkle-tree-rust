@@ -49,7 +49,7 @@ where
 }
 
 /**
- * Calculates the merkle root
+ * Recursive function to calculate the merkle root
  */
 fn generate_merkle_root(leaves: &[Vec<u8>], hash_fn: fn(&[u8]) -> Vec<u8>) -> Vec<u8> {
     let mut i = 0;
@@ -58,12 +58,17 @@ fn generate_merkle_root(leaves: &[Vec<u8>], hash_fn: fn(&[u8]) -> Vec<u8>) -> Ve
         return leaves[0].clone();
     }
 
-    while i < leaves.len() - 1 {
-        let mut combined_content: Vec<u8> = Vec::new();
-        combined_content.append(&mut leaves[i].clone());
-        combined_content.append(&mut leaves[i + 1].clone());
-        parent.push(hash_fn(&combined_content));
-        i += 2;
+    while i < leaves.len() {
+        if i + 1 == leaves.len() {
+            parent.push(leaves[i].clone());
+            i += 1;
+        } else {
+            let mut combined_content: Vec<u8> = Vec::new();
+            combined_content.append(&mut leaves[i].clone());
+            combined_content.append(&mut leaves[i + 1].clone());
+            parent.push(hash_fn(&combined_content));
+            i += 2;
+        }
     }
 
     generate_merkle_root(&parent, hash_fn)
