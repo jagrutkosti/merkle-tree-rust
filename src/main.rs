@@ -1,6 +1,6 @@
-extern crate hex;
 mod merkle_tree;
 
+use hex;
 use merkle_tree::construct_merkle_tree;
 use sha2::{Digest, Sha256};
 
@@ -11,9 +11,7 @@ fn main() {
     println!("Sha256 hash is: {:?}", hex::encode(merkle_tree.root));
 }
 
-/**
- * Customizable method as required by merkle_tree mod
- */
+// Customizable method as required by merkle_tree mod
 fn custom_hash_algo(content: &[u8]) -> Vec<u8> {
     let mut hash_fn = Sha256::new();
     hash_fn.update(content);

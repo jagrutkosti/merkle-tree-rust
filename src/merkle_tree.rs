@@ -6,12 +6,10 @@ pub struct MerkleTree {
     hash_fn: fn(&[u8]) -> Vec<u8>,
 }
 
-/**
- * Constructs merkle tree by
- * 1: Converts any vector/array type to array of bytes
- * 2: Hashes those leaves to get hashed_leaves by using the given hash function
- * 3: Calculates the root hash of the tree and returns MerkleTree
- */
+// Constructs merkle tree by
+// 1: Converts any vector/array type to array of bytes
+// 2: Hashes those leaves to get hashed_leaves by using the given hash function
+// 3: Calculates the root hash of the tree and returns MerkleTree
 pub fn construct_merkle_tree<T>(leaves: &[T], hash_fn: fn(&[u8]) -> Vec<u8>) -> MerkleTree
 where
     T: ByteEncodable,
@@ -32,9 +30,7 @@ where
     }
 }
 
-/**
- * Takes an array of any type and for each item in array converts to bytes
- */
+// Takes an array of any type and for each item in array converts to bytes
 fn convert_to_bytes<T>(vector: &[T]) -> Vec<Vec<u8>>
 where
     T: ByteEncodable,
@@ -48,24 +44,22 @@ where
     bytes_vector
 }
 
-/**
- * Recursive function to calculate the merkle root
- */
+// Recursive function to calculate the merkle root
 fn generate_merkle_root(leaves: &[Vec<u8>], hash_fn: fn(&[u8]) -> Vec<u8>) -> Vec<u8> {
     let mut i = 0;
     let mut parent: Vec<Vec<u8>> = Vec::new();
     if leaves.len() == 1 {
-        return leaves[0].clone();
+        return leaves[0].to_vec();
     }
 
     while i < leaves.len() {
         if i + 1 == leaves.len() {
-            parent.push(leaves[i].clone());
+            parent.push(leaves[i].to_vec());
             i += 1;
         } else {
             let mut combined_content: Vec<u8> = Vec::new();
-            combined_content.append(&mut leaves[i].clone());
-            combined_content.append(&mut leaves[i + 1].clone());
+            combined_content.append(&mut leaves[i].to_vec());
+            combined_content.append(&mut leaves[i + 1].to_vec());
             parent.push(hash_fn(&combined_content));
             i += 2;
         }
